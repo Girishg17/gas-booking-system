@@ -243,6 +243,16 @@ app.post('/api/updateRow', (req, res) => {
         }
     });
 });
+app.post('/api/getShippedOrders', (req, res) => {
+    gasBookingDatabase.getShippedOrders(req.body, (result) => {
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send([]);
+        }
+    });
+});
+
 
 app.post('/api/insertRow', (req, res) => {
     gasBookingDatabase.insertRow(req.body, (status) => {

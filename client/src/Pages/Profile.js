@@ -9,6 +9,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
 import AnimatedNumber from "animated-number-react";
+import { color } from "@mui/system";
 
 const Profile = () => {
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -19,6 +20,7 @@ const Profile = () => {
     const [companySpendings, setcompanySpendings] = useState([]);
     const [SpendingsTotal, setSpendingsTotal] = useState(0);
     const [TotalOrders, setTotalOrders] = useState(0);
+    const [shippedOrders, setshippedOrders] = useState([]);
     const [userDetails, setuserDetails] = useState({
         username: "",
         firstname: "",
@@ -52,6 +54,20 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             });
+
+            axios
+            .post(process.env.REACT_APP_SERVER_URL + "/api/getShippedOrders", {
+                username: user,
+            })
+            .then((res) => {
+                console.log(res.data);
+                setshippedOrders(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        
 
         axios
             .post(process.env.REACT_APP_SERVER_URL + "/api/getTotalOrders", {
@@ -341,7 +357,37 @@ const Profile = () => {
                                 borderRadius: "10px",
                             }}
                         >
-                            <h1>My Posts</h1>
+                            <h3 style={{ color: "white" }}>Pending Orders</h3>
+                            <hr style={{ width: "90%", marginTop: "3px" }} />
+                            <br />
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    flexWrap: "wrap",
+                                    marginLeft: "15px",
+                                    width: "100%",
+                                    maxHeight: "70%",
+                                }}
+                            >
+                                
+                                <h5 style={{display:"flex"}   }> ORDER ID</h5>
+                                
+                                {shippedOrders.map((ordersh) => {
+                                    return (
+                                        <p
+                                            style={{
+                                                color: "white",
+                                                fontSize: "18px",
+                                            }}
+                                        >   
+                                       
+                                            {ordersh.order_id}
+                                           
+                                        </p>
+                                    );
+                                })}
+                            </div>
                         </Paper>
                     </Box>
                 </div>

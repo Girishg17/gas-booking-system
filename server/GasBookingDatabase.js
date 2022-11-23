@@ -40,7 +40,7 @@ class GasBookingDatabase {
         callback
     ) {
         this.pool.query(
-            `INSERT INTO customer (firstname,lastname,username,password,pincode,email,address,phone_number,company) VALUES ('${firstname}','${lastname}','${username}','${password}',${pincode},'${email}','${address}',${phone_number},'${company}')`,
+            `INSERT INTO customer (firstname,lastname,username,password,pincode,email,address,phone_number) VALUES ('${firstname}','${lastname}','${username}','${password}',${pincode},'${email}','${address}',${phone_number})`,
             (err, result) => {
                 if (err) {
                     console.log(err.sqlMessage);
@@ -267,9 +267,28 @@ class GasBookingDatabase {
         )
     }
 
+
+
+
     getDealerOrders({username}, callback) {
         this.pool.query(
             `SELECT * FROM get_dealer_orders WHERE License_No='${username}'`,
+            (err, result) => {
+                if (err) {
+                    console.log(err);
+                    callback([]);
+                    return;
+                }
+                console.log(result);
+                callback(result);
+            }
+        );
+    }
+
+    getShippedOrders({username}, callback) {
+        this.pool.query(
+            `SELECT order_id,order_date,order_status from orders  natural join(SELECT order_id,order_status from order_status EXCEPT SELECT order_id,order_status from order_status 
+                WHERE order_status="shipped") as c where c.order_id=orders.order_id and orders.username='${username}' ORDER by order_date LIMIT 3;`,
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -357,9 +376,10 @@ class GasBookingDatabase {
     }
 
     updateRow({table, prevRow, row}, callback) {
+        //console.log(prevRow);
         let condition = Object.keys(prevRow).filter(key => prevRow[key]? true: false).map(key => `${key}='${prevRow[key]}'`).join(' AND ');
         let update = Object.keys(row).map(key => `${key}='${row[key]}'`).join(',');
-        console.log(update);
+       // console.log(update);
         console.log(condition);
         this.pool.query(
             `update ${table} set ${update} where ${condition}`,

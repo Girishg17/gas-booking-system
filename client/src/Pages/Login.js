@@ -49,6 +49,7 @@ class Login extends Component {
         ) {
           const token = new Cookies();
           token.set('username', res.data.username, { path: "/", maxAge: 604800 })
+          console.log(res.data.isDealer);
           this.setState({
             tohome: true,
             homePage: res.data.isDealer ? "/dealer" : "/booking",

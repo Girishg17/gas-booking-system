@@ -154,3 +154,13 @@ ALTER TABLE order_status ADD FOREIGN key(order_id) REFERENCES orders(order_id) o
 ALTER TABLE payment ADD FOREIGN key(order_id) REFERENCES orders(order_id) on DELETE CASCADE on update cascade ;
 
 ALTER TABLE customer ADD FOREIGN KEY(company) REFERENCES dealer(company_name) on DELETE SET NULL on update CASCADE; 
+
+ALTER TABLE dealer ADD Managed_by varchar(20);
+ALTER TABLE dealer ADD FOREIGN KEY(Managed_by) REFERENCES admin(username) on DELETE CASCADE on update CASCADE;
+
+
+
+
+
+SELECT order_id,order_date,order_status from orders  natural join(SELECT order_id,order_status from order_status except SELECT order_id,order_status from order_status 
+					WHERE order_status="pending") as c where c.order_id=orders.order_id and orders.username="girish" ORDER by order_date LIMIT 3;

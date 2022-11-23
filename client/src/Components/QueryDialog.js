@@ -28,10 +28,16 @@ export default function QueryDialog({ open, handleClose }) {
         query: value,
       })
       .then((response) => {
-        setOutput(response.data);
+        console.log(response.data);
         seterrorOutput(false);
+        if (Array.isArray(response.data)) {
+          setOutput(response.data);
+        } else {
+          setOutput([response.data]);
+        }
       })
       .catch((error) => {
+        console.log(error);
         setOutput(error.response.data.error);
         seterrorOutput(true);
       });
@@ -113,7 +119,7 @@ export default function QueryDialog({ open, handleClose }) {
             sx={{
               minWidth: "100%",
               maxWidth: "100%",
-              color: "black",
+              color: "white",
               borderRadius: "5px",
               border: "1px solid #3f51b5",
               minHeight: "270px",
@@ -122,7 +128,14 @@ export default function QueryDialog({ open, handleClose }) {
             }}
           >
             {errorOutput ? (
-              output
+              <p
+                style={{
+                  color: "red",
+                  fontWeight: "bold",
+                }}
+              >
+                {output}
+              </p>
             ) : (
               <table className="table table-striped">
                 <thead>
@@ -133,7 +146,7 @@ export default function QueryDialog({ open, handleClose }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {output.map((row,index) => {
+                  {output.map((row, index) => {
                     return (
                       <tr key={index}>
                         {Object.keys(row).map((key) => {

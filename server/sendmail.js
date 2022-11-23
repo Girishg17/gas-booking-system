@@ -3,10 +3,10 @@ const { google } = require('googleapis');
 require('dotenv').config();
 
 // These id's and secrets should come from .env file.
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLEINT_SECRET = process.env.CLEINT_SECRET;
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const CLIENT_ID = '675933389907-sa20j0dhd1d27lq3hpqa4skttht0bkge.apps.googleusercontent.com';
+const CLEINT_SECRET ='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';
+const REDIRECT_URI =  'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN ='1//04PnfJahh1kANCgYIARAAGAQSNwF-L9IrNcklAy_I0ITauIMe3IbOl2ZlD2pDWM9SFNOtIdyV3VcS7f_1WtdaCecDQfEt4HaprTM';
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLEINT_SECRET,
@@ -22,7 +22,7 @@ const sendMail = async (email, { gas_type, payment_method, amount }) => {
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: 'kumarvinayau@gmail.com',
+        user: 'girishgg6363@gmail.com',
         clientId: CLIENT_ID,
         clientSecret: CLEINT_SECRET,
         refreshToken: REFRESH_TOKEN,

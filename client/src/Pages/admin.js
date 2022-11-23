@@ -50,9 +50,9 @@ export default function Admin() {
     const [openQuery, setOpenQuery] = React.useState(false);
 
 
-    const URLpath = new URLSearchParams(window.location.search);
-    const id = URLpath.get('id');
-    const name = URLpath.get('password');
+    // const URLpath = new URLSearchParams(window.location.search);
+    // const id = URLpath.get('id');
+    // const name = URLpath.get('password');
     
 
     const handleClickOpen = (row) => {
@@ -114,6 +114,7 @@ export default function Admin() {
         if (Tables.length > 0) {
             axios.post(process.env.REACT_APP_SERVER_URL + "/api/getTable", { table: Tables[buttonSelected].Tables_in_gasbooking })
                 .then((res) => {
+                    console.log(res.data);
                     setdataTable(res.data);
                 })
                 .catch((err) => {
@@ -168,7 +169,7 @@ export default function Admin() {
                     <Typography variant="h6" component="h2">
                         Tables
                     </Typography>
-                    {Tables.map(({ Tables_in_gasbooking }, index) =>
+                    {Tables.map(({Tables_in_gasbooking }, index) =>
                     (<Button
                         key={index}
                         variant={buttonSelected === index ? "contained" : "outlined"}

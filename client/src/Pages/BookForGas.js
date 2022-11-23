@@ -78,6 +78,7 @@ const BookForGas = () => {
                             )}
                             sx={{ width: 300, marginTop: "20px" }}
                             onChange={(_, newvalue) => {
+                                console.log(newvalue);
                                 setselectedgastype(gas_type[newvalue.index]);
                             }}
                             renderInput={(params) => (
