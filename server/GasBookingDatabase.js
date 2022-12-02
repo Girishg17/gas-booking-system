@@ -68,6 +68,8 @@ class GasBookingDatabase {
         );
     }
 
+    
+
     getEmail({username}, callback) {
         this.pool.query(
             `select email from customer where username='${username}'`,
@@ -418,6 +420,30 @@ class GasBookingDatabase {
             }
         );
     }
+    runModification(query, callback) {
+        this.pool.query(`call get_customer_by_company()`,(err,result) => {
+            if(err) {
+                console.log(err);
+                callback(err, result);
+                return;
+            }
+            this.pool.query(`select * from subscriber  `,
+            (err, result) => {
+                console.log(result);
+                callback(err, result);
+            });
+        })
+    }
+    rundelete(query, callback) {
+this.pool.query(`delete from subscriber`,(err,result) => {
+            if(err) {
+                console.log(err);
+                callback(err, result);
+                return;
+            }
+            callback(err, result)
+            });
+        }
 }
 
 module.exports = GasBookingDatabase;

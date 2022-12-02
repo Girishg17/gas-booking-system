@@ -273,6 +273,27 @@ app.post('/api/runQuery', (req, res) => {
         }
     });
 });
+app.get('/api/runModification',(req,res)=>{
+    gasBookingDatabase.runModification(req.body.query,(err,result)=>{
+        if(err){
+            res.status(400).json({error: err.message});
+        }else{
+            res.send(result);
+        }
+    });
+}
+);
+app.post('/api/runDeletefromSubscriber',(req,res)=>{
+    gasBookingDatabase.rundelete(req.body.query,(err,result)=>{
+        if(err){
+            res.status(400).json({error: err.message});
+        }else{
+            res.send(result);
+        }
+    });
+}
+);
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)

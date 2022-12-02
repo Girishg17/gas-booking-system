@@ -12,6 +12,7 @@ import Admin from "./Pages/Admin";
 import Dealer from "./Pages/Dealer";
 import PageNotFound from "./Pages/PageNotFound";
 import Profile from "./Pages/Profile";
+import Modification from "./Pages/Modification";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/dealer" element={<Dealer />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<PageNotFound />} />
+            <Route path="/mod" element={<Modification/>} />
           </Routes>
         </Router>
       </div>
